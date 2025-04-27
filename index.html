@@ -1,26 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Grades????</title>
-
-	<style>
-		body {
-			background-image: https://www.chalkbeat.org/resizer/v2/ZKGQ5BSBSRFHNGMNOQTZMXDP5Q.jpg?auth=34161aa011fe4520088c2d454770bcab642532aab0acfc4b225b549aeee32aaf&smart=true&width=1600&height=900;
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
-	</style>
-	
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Score Analyzer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body { background-color: #f4f7fa; font-family: 'Roboto', sans-serif; }
+        .container { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-top: 50px; }
+        h1 { font-family: 'Raleway', sans-serif; color: #0056b3; font-size: 2.5rem; margin-bottom: 20px; }
+        p, footer { text-align: center; font-size: 1rem; color: #555; }
+        .btn-info { background-color: #ff7f50; border-color: #ff7f50; }
+        .btn-info:hover { background-color: #ff6f40; }
+        .row { margin-bottom: 20px; }
+        .card { border-radius: 8px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
+        .card img { border-radius: 8px; height: 160px; object-fit: cover; }
+        .card-body { text-align: center; padding: 10px; }
+        .form-control { border-radius: 8px; padding: 12px; }
+        footer { font-size: 0.85rem; color: #666; }
+    </style>
 </head>
 <body>
-	<h1>Score Analyzer</h1>
-	<div class="container">
-		<div class="science">
-			<img src: https://img.freepik.com/free-vector/hand-drawn-science-education-background_23-2148499325.jpg>
 
+<div class="container">
+    <h1>Grade Score Analyzer</h1>
+    <p>Enter your grades for Math, Science, and English and click "Analyze"!</p>
+
+    <button class="btn btn-info mb-3" onclick="instructions()">Need help?</button>
+    <p id="instructionText" style="display: none;">Enter grades and hit 'Analyze'. Simple!</p>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://tidylady.net/cdn/shop/products/il_fullxfull.4003178026_at37_1200x1200.jpg?v=1658513794" class="card-img-top" alt="English">
+                <div class="card-body">
+                    <h5 class="card-title">English</h5>
+                    <input type="number" class="form-control" id="english" placeholder="Enter grade">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://i.ebayimg.com/images/g/SwsAAOSwPW9dBSs7/s-l1200.jpg" class="card-img-top" alt="Science">
+                <div class="card-body">
+                    <h5 class="card-title">Science</h5>
+                    <input type="number" class="form-control" id="science" placeholder="Enter grade">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://i.pinimg.com/564x/80/56/1e/80561e8c9748a629f2d75ac4446d45da.jpg" class="card-img-top" alt="Math">
+                <div class="card-body">
+                    <h5 class="card-title">Math</h5>
+                    <input type="number" class="form-control" id="math" placeholder="Enter grade">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <button class="btn btn-primary" onclick="analyzeScore()">Analyze</button>
+    </div>
+
+    <h3 class="mt-4 text-center" id="result"></h3>
+
+    <footer>
+        <small>Sources: <a href="https://www.w3schools.com" target="_blank">w3schools</a></small>
+        <small>@James Guile M. Zaldivar</small>
+    </footer>
+</div>
+
+<script>
+    function instructions() {
+        var text = document.getElementById("instructionText");
+        text.style.display = (text.style.display === "none") ? "block" : "none";
+    }
+
+    function analyzeScore() {
+        var english = parseFloat(document.getElementById('english').value);
+        var science = parseFloat(document.getElementById('science').value);
+        var math = parseFloat(document.getElementById('math').value);
+
+        var average = (english + science + math) / 3;
+        var sqrtAverage = Math.sqrt(average).toFixed(2);
+        var highestGrade = Math.max(english, science, math);
+        var lowestGrade = Math.min(english, science, math);
+        var gradeDifference = Math.abs(highestGrade - lowestGrade).toFixed(2);
+        var rating = "";
+
+        if (average >= 94) rating = "Excellent";
+        else if (average >= 87) rating = "Above Satisfactory";
+        else if (average >= 80) rating = "Satisfactory";
+        else if (average >= 75) rating = "Needs Improvement";
+        else if (average >= 70) rating = "Poor";
+        else rating = "Invalid Input.";
+
+        document.getElementById('result').innerHTML = 
+            `Your Average: ${average.toFixed(2)}<br>Rating: <strong>${rating}</strong><br>Square Root of Average: ${sqrtAverage}<br>Grade Difference: ${gradeDifference}`;
+    }
+</script>
 
 </body>
 </html>
